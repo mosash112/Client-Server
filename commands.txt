@@ -16,3 +16,5 @@ java -cp 'G:\downloads\edu\9th-term\net-centric\proj2\client-server\src\client';
 https://docs.oracle.com/cd/E19830-01/819-4726/fxxzk/index.html
 
 https://stackoverflow.com/questions/2427473/java-rmi-accesscontrolexception-access-denied
+
+https://stackoverflow.com/questions/14071885/java-rmi-unmarshalexception-error-unmarshalling-arguments-nested-exception-is
