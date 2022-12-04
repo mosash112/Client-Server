@@ -69,41 +69,4 @@ public class ComputeEngine implements Compute  {
         }
         return qs;
     }
-
-//    public void request(String file){
-//        File f = new File(file);
-//        Scanner bat = null;
-//        int ns[] = new int[2], dist = 0;
-//        String r;
-//
-//        try {
-//            bat = new Scanner(f);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        while (bat.hasNextLine()) {
-//            String data = bat.nextLine();
-////            System.out.println(data);
-//            if (data.equals("F"))
-//                break;
-//            r = data.split(" ")[0];
-//            ns[0] = Integer.parseInt(data.split(" ")[1]);
-//            ns[1] = Integer.parseInt(data.split(" ")[2]);
-//            System.out.println(r + " " + ns[0] + ", " + ns[1]);
-//            switch (r) {
-//                case "A":
-//                    g.checkNode(ns[0], ns[1]);
-//                    break;
-//                case "Q":
-//                    dist = g.query(ns[0], ns[1]);
-//                    System.out.println("dist: "+dist);
-//                    break;
-//                case "D":
-//                    g.removeNode(ns[0], ns[1]);
-//                    break;
-//
-//            }
-//            g.printEdges();
-//        }
-//    }
 }

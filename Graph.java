@@ -8,10 +8,6 @@ import java.util.Scanner;
 public class Graph {
     private HashMap<Integer,ArrayList<Integer>> nodes = new HashMap<>();
 
-//    public Graph(HashMap<Integer, ArrayList<Integer>> nodes) {
-//        this.nodes = nodes;
-//    }
-
     public void printEdges(){
         for (int n:nodes.keySet()) {
             System.out.println("node ("+n+"): "+nodes.get(n));

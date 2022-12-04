@@ -22,7 +22,7 @@ public class Client {
             System.out.print("output: ");
             for (int i:out) {
                 System.out.print(i+" ");
-                fw.write(i+"\n");
+                fw.write(i+"\r\n");
             }
             fw.close();
         } catch (Exception e) {
@@ -30,32 +30,4 @@ public class Client {
             e.printStackTrace();
         }
     }
-//    public void batch(String f){
-//        File file = new File(f);
-//        Scanner bat = null;
-//        int ns[] = new int[2], count = 0;
-//        String r;
-//        ArrayList<ArrayList<String>> ops = new ArrayList<>();
-//
-//        try {
-//            bat = new Scanner(file);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        while (bat.hasNextLine()) {
-//            String data = bat.nextLine();
-//            System.out.println(data);
-//            if (data.equals("F"))
-//                break;
-//            ops.add(new ArrayList<>(3));
-//            ops.get(count).add(data.split(" ")[0]);
-//            ops.get(count).add(data.split(" ")[1]);
-//            ops.get(count).add(data.split(" ")[2]);
-//            count++;
-//        }
-//        System.out.println("ops.size:"+ops.size());
-//        for (ArrayList<String> s:ops) {
-//            System.out.println(s);
-//        }
-//    }
 }

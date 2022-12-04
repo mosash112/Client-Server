@@ -27,7 +27,6 @@ public class Request implements Task<int[]>, Serializable {
         }
         while (bat.hasNextLine()) {
             String data = bat.nextLine();
-//            System.out.println(data);
             if (data.equals("F"))
                 break;
             ops.add(new ArrayList<>(3));
@@ -36,10 +35,6 @@ public class Request implements Task<int[]>, Serializable {
             ops.get(count).add(data.split(" ")[2]);
             count++;
         }
-//        System.out.println("ops.size:"+ops.size());
-//        for (ArrayList<String> s:ops) {
-//            System.out.println(s);
-//        }
         return ops;
     }
 
