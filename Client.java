@@ -24,6 +24,7 @@ public class Client {
                 System.out.print(i+" ");
                 fw.write(i+"\r\n");
             }
+            System.out.println();
             fw.close();
         } catch (Exception e) {
             System.err.println("Client exception:");

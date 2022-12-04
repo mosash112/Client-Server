@@ -22,6 +22,7 @@ public class ComputeEngine implements Compute  {
         while(!flag){
             System.out.print(".");
         }
+        System.out.println(out);
         return out;
     }
 
