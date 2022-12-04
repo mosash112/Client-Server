@@ -14,10 +14,10 @@ public class Start {
             Thread th = new Thread(ce);
             th.start();
 
-//            ComputePi cp1 = new ComputePi();
+//            Client cl1 = new Client();
 //            ComputePi cp2 = new ComputePi();
 //            ComputePi cp3 = new ComputePi();
-//            cp1.request("127.0.0.1","5");
+//            cl1.request("127.0.0.1","batch1.txt");
 //            cp2.request("127.0.0.1","15");
 //            cp3.request("127.0.0.1","25");
         }catch (Exception e){

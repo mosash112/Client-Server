@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -9,12 +10,11 @@ import java.util.Scanner;
 
 public class ComputeEngine implements Runnable, Compute  {
 
-    private HashMap<Integer,ArrayList<Integer>> nodes = new HashMap<>();
+//    private HashMap<Integer,ArrayList<Integer>> nodes = new HashMap<>();
+//    private Graph g = new Graph(nodes);
+    private Graph g = new Graph();
 
-    public ComputeEngine() {
-        super();
-    }
-
+    @Override
     public <T> T executeTask(Task<T> t) {
         return t.execute();
     }
@@ -35,64 +35,35 @@ public class ComputeEngine implements Runnable, Compute  {
         }
     }
 
-    public void printEdges(){
-        for (int n:nodes.keySet()) {
-            System.out.println("node ("+n+"): "+nodes.get(n));
-        }
-    }
-
-    public void checkNode(int n, int e) {
-        ArrayList<Integer> old = new ArrayList<>(), es = new ArrayList<>();
-        old = nodes.get(n);
-        System.out.println(old);
-        if (old == null){
-            es.add(e);
-        nodes.put(n, es);
-        }else {
-            es.addAll(old);
-            es.add(e);
-            nodes.replace(n, old, es);
-        }
-        System.out.println(nodes);
-    }
-
-    public void removeNode(int n, int e){
-        ArrayList<Integer> es = new ArrayList<>(), old = new ArrayList<>();
-        es = nodes.get(n);
-//        System.out.println(es);
-        if(es.contains(e)) {
-            old = es;
-            es.remove(es.indexOf(e));
-        }
-        nodes.replace(n, old, es);
-    }
-
-    public void initiateGraph(){
-        File f = new File("./initialInput.txt");
-        Scanner in = null;
-        int ns[] = new int[2];
-
-        try {
-            in = new Scanner(f);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        while (in.hasNextLine()) {
-            String data = in.nextLine();
-//            System.out.println(data);
-            if (data.equals("S"))
-                break;
-            ns[0] = Integer.parseInt(data.split(" ")[0]);
-            ns[1] = Integer.parseInt(data.split(" ")[1]);
-            checkNode(ns[0],ns[1]);
-        }
-        printEdges();
-    }
+//    public int[] request(HashMap<String,int[]> req){
+//        int ns[] = new int[2], qs[] = new int[0];
+//        String r = null;
+//        for (String s:req.keySet()) {
+//            r = s;
+//            ns = req.get(s);
+//        }
+//
+//        System.out.println(r+" "+ns[0]+", "+ns[1]);
+//        switch (r){
+//            case "A":
+//                g.checkNode(ns[0],ns[1]);
+//                break;
+//            case "Q":
+//                g.query(nodes,ns[0],ns[1],nodes.size());
+//                break;
+//            case "D":
+//                g.removeNode(ns[0], ns[1]);
+//                break;
+//
+//        }
+//        g.printEdges();
+//        return qs;
+//    }
 
     public void request(String file){
         File f = new File(file);
         Scanner bat = null;
-        int ns[] = new int[2];
+        int ns[] = new int[2], dist = 0;
         String r;
 
         try {
@@ -108,25 +79,28 @@ public class ComputeEngine implements Runnable, Compute  {
             r = data.split(" ")[0];
             ns[0] = Integer.parseInt(data.split(" ")[1]);
             ns[1] = Integer.parseInt(data.split(" ")[2]);
-            System.out.println(r+" "+ns[0]+", "+ns[1]);
-            switch (r){
+            System.out.println(r + " " + ns[0] + ", " + ns[1]);
+            switch (r) {
                 case "A":
-                    checkNode(ns[0],ns[1]);
+                    g.checkNode(ns[0], ns[1]);
                     break;
                 case "Q":
+                    dist = g.query(ns[0], ns[1]);
+                    System.out.println("dist: "+dist);
                     break;
                 case "D":
-                    removeNode(ns[0], ns[1]);
+                    g.removeNode(ns[0], ns[1]);
                     break;
+
             }
-            printEdges();
+            g.printEdges();
         }
     }
 
     @Override
     public void run() {
         System.out.println("running in the thread...");
-        initiateGraph();
+        g.initiateGraph();
         System.out.println("R");
         System.out.println("batch:");
         Scanner sc = new Scanner(System.in);

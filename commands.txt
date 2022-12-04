@@ -11,7 +11,7 @@ client:
 java -cp 'G:\downloads\edu\9th-term\net-centric\proj2\client-server\src\client';G:\downloads\edu\9th-term\net-centric\proj2\client-server\src\compute.jar
      -Djava.rmi.server.codebase=G:\downloads\edu\9th-term\net-centric\proj2\client-server\src\
      -Djava.security.policy=client.policy
-        client.ComputePi mycomputer.example.com 45
+        client.Client mycomputer.example.com 45
 
 https://docs.oracle.com/cd/E19830-01/819-4726/fxxzk/index.html
 
