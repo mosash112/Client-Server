@@ -11,15 +11,11 @@ public class Start {
 //            Runtime.getRuntime().exec("cmd /c start cmd.exe /K \"rmiregistry\"");
             ComputeEngine ce = new ComputeEngine();
             ce.setUp();
-            Thread th = new Thread(ce);
-            th.start();
 
-//            Client cl1 = new Client();
-//            ComputePi cp2 = new ComputePi();
-//            ComputePi cp3 = new ComputePi();
-//            cl1.request("127.0.0.1","batch1.txt");
-//            cp2.request("127.0.0.1","15");
-//            cp3.request("127.0.0.1","25");
+            Client cl1 = new Client();
+
+            cl1.request("127.0.0.1","batch1.txt", "log1.txt");
+
         }catch (Exception e){
             System.out.println(e);
         }

@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
@@ -8,27 +9,33 @@ import java.util.Scanner;
 
 public class Client {
 
-    public void request(String host, String file) {
+    public void request(String host, String file, String output) {
         try {
             String name = "Compute";
             System.setProperty("java.security.policy","file:./client.policy");
             Registry registry = LocateRegistry.getRegistry(host);
             Compute comp = (Compute) registry.lookup(name);
+//            batch(file);
             Request task = new Request(file);
-            int[] out = comp.executeTask(task);
-            System.out.println(out);
+            ArrayList<Integer> out = comp.executeTask(task);
+            FileWriter fw = new FileWriter(output);
+            System.out.print("output: ");
+            for (int i:out) {
+                System.out.print(i+" ");
+                fw.write(i+"\n");
+            }
+            fw.close();
         } catch (Exception e) {
             System.err.println("Client exception:");
             e.printStackTrace();
         }
     }
-
-//    public HashMap<String, int[]> batch(String f){
+//    public void batch(String f){
 //        File file = new File(f);
 //        Scanner bat = null;
-//        int ns[] = new int[2];
+//        int ns[] = new int[2], count = 0;
 //        String r;
-//        HashMap<String, int[]> ops = new HashMap<>();
+//        ArrayList<ArrayList<String>> ops = new ArrayList<>();
 //
 //        try {
 //            bat = new Scanner(file);
@@ -37,14 +44,18 @@ public class Client {
 //        }
 //        while (bat.hasNextLine()) {
 //            String data = bat.nextLine();
+//            System.out.println(data);
 //            if (data.equals("F"))
 //                break;
-//            r = data.split(" ")[0];
-//            ns[0] = Integer.parseInt(data.split(" ")[1]);
-//            ns[1] = Integer.parseInt(data.split(" ")[2]);
-//            ops.put(r, ns);
+//            ops.add(new ArrayList<>(3));
+//            ops.get(count).add(data.split(" ")[0]);
+//            ops.get(count).add(data.split(" ")[1]);
+//            ops.get(count).add(data.split(" ")[2]);
+//            count++;
 //        }
-////        System.out.println(ops);
-//        return ops;
+//        System.out.println("ops.size:"+ops.size());
+//        for (ArrayList<String> s:ops) {
+//            System.out.println(s);
+//        }
 //    }
 }

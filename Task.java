@@ -1,4 +1,5 @@
+import java.util.ArrayList;
 
 public interface Task<T> {
-    T execute();
+    ArrayList<ArrayList<String>> execute();
 }

@@ -1,7 +1,8 @@
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 public interface Compute extends Remote {
-    <T> T executeTask(Task<T> t) throws RemoteException;
+    <T> ArrayList<Integer> executeTask(Task<T> t) throws RemoteException;
 }
