@@ -23,7 +23,7 @@ public class Graph {
         old = nodes.get(n);
         n2 = nodes.get(e);
 //        System.out.println(old);
-        System.out.println("node "+e+" : n2: "+n2);
+//        System.out.println("node "+e+" : n2: "+n2);
         if (n2 == null)
             nodes.put(e, en);
         if (old == null){
@@ -70,11 +70,13 @@ public class Graph {
     }
 
     public int query(int src, int dest){
+        if (BFS(src,dest)[dest]==Integer.MAX_VALUE)
+            return -1;
         return BFS(src,dest)[dest];
     }
 
     private int[] BFS(int src, int dest){
-        int v = nodes.size();
+        int v = nodes.size()+1;
         int[] pred = new int[v],dist = new int[v];
         LinkedList<Integer> queue = new LinkedList<Integer>();
         boolean[] visited = new boolean[v];
@@ -90,7 +92,7 @@ public class Graph {
         while (!queue.isEmpty()) {
             int u = queue.remove();
             for (int i = 0; i < nodes.get(u).size(); i++) {
-//                System.out.println(i);
+//                System.out.println(nodes.get(u).get(i));
                 if (!visited[nodes.get(u).get(i)]) {
                     visited[nodes.get(u).get(i)] = true;
                     dist[nodes.get(u).get(i)] = dist[u] + 1;

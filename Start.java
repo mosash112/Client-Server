@@ -8,7 +8,7 @@ public class Start {
     public static void main(String[] args) throws RemoteException {
         try {
             r = LocateRegistry.createRegistry(0);
-            Runtime.getRuntime().exec("cmd /c start cmd.exe /K \"rmiregistry\"");
+//            Runtime.getRuntime().exec("cmd /c start cmd.exe /K \"rmiregistry\"");
             ComputeEngine ce = new ComputeEngine();
             ce.setUp();
             Thread th = new Thread(ce);
