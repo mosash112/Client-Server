@@ -1,15 +1,15 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class ComputeEngine implements Runnable, Compute  {
 
-    private ArrayList<Edge> edges = new ArrayList<>();
+    private HashMap<Integer,ArrayList<Integer>> nodes = new HashMap<>();
 
     public ComputeEngine() {
         super();
@@ -36,44 +36,41 @@ public class ComputeEngine implements Runnable, Compute  {
     }
 
     public void printEdges(){
-        for (Edge e:edges) {
-            System.out.println("edge ("+(edges.indexOf(e)+1)+"): "+e.getNodes()[0]+", "+e.getNodes()[1]);
+        for (int n:nodes.keySet()) {
+            System.out.println("node ("+n+"): "+nodes.get(n));
         }
     }
 
-    public void checkEdge(Edge e){
-//        System.out.println(edges.contains(e));
-        boolean exist = false;
-        for (Edge ed:edges) {
-            if (e.getNodes()[0]==ed.getNodes()[0])
-                if (e.getNodes()[1]==ed.getNodes()[1]) {
-                    exist = true;
-                    break;
-                }
+    public void checkNode(int n, int e) {
+        ArrayList<Integer> old = new ArrayList<>(), es = new ArrayList<>();
+        old = nodes.get(n);
+        System.out.println(old);
+        if (old == null){
+            es.add(e);
+        nodes.put(n, es);
+        }else {
+            es.addAll(old);
+            es.add(e);
+            nodes.replace(n, old, es);
         }
-        if (!exist)
-            edges.add(e);
-    }
-    
-    public void removeEdge(Edge e){
-        int id = 0;
-        for (Edge ed:edges) {
-            if (e.getNodes()[0]==ed.getNodes()[0])
-                if (e.getNodes()[1]==ed.getNodes()[1]) {
-                    id = edges.indexOf(ed);
-                    break;
-                }
-        }
-        if (id != -1) {
-            System.out.println("id of removed edge: " + id);
-            edges.remove(id);
-        }
+        System.out.println(nodes);
     }
 
-    public void initiatGraph(){
+    public void removeNode(int n, int e){
+        ArrayList<Integer> es = new ArrayList<>(), old = new ArrayList<>();
+        es = nodes.get(n);
+//        System.out.println(es);
+        if(es.contains(e)) {
+            old = es;
+            es.remove(es.indexOf(e));
+        }
+        nodes.replace(n, old, es);
+    }
+
+    public void initiateGraph(){
         File f = new File("./initialInput.txt");
         Scanner in = null;
-        int es[] = new int[2], i=0;
+        int ns[] = new int[2];
 
         try {
             in = new Scanner(f);
@@ -85,14 +82,9 @@ public class ComputeEngine implements Runnable, Compute  {
 //            System.out.println(data);
             if (data.equals("S"))
                 break;
-            for (String s : data.split(" ")) {
-                es[i] = Integer.parseInt(s);
-                i++;
-            }
-//            System.out.println(es[0]+", "+es[1]);
-            Edge e = new Edge(es[0], es[1]);
-            checkEdge(e);
-            i = 0;
+            ns[0] = Integer.parseInt(data.split(" ")[0]);
+            ns[1] = Integer.parseInt(data.split(" ")[1]);
+            checkNode(ns[0],ns[1]);
         }
         printEdges();
     }
@@ -117,15 +109,14 @@ public class ComputeEngine implements Runnable, Compute  {
             ns[0] = Integer.parseInt(data.split(" ")[1]);
             ns[1] = Integer.parseInt(data.split(" ")[2]);
             System.out.println(r+" "+ns[0]+", "+ns[1]);
-            Edge e = new Edge(ns[0], ns[1]);
             switch (r){
                 case "A":
-                    checkEdge(e);
+                    checkNode(ns[0],ns[1]);
                     break;
                 case "Q":
                     break;
                 case "D":
-                    removeEdge(e);
+                    removeNode(ns[0], ns[1]);
                     break;
             }
             printEdges();
@@ -135,7 +126,7 @@ public class ComputeEngine implements Runnable, Compute  {
     @Override
     public void run() {
         System.out.println("running in the thread...");
-        initiatGraph();
+        initiateGraph();
         System.out.println("R");
         System.out.println("batch:");
         Scanner sc = new Scanner(System.in);
